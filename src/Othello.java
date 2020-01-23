@@ -25,6 +25,11 @@ public class Othello {
 		return color;
 	}
 
+	public void putPiece(Coordinate coordinate) {
+		board.getCell(coordinate.x, coordinate.y).putPiece(new OthelloPiece(getCurrentColor()));
+		color = (color == OthelloPiece.Color.BLACK) ? OthelloPiece.Color.WHITE : OthelloPiece.Color.BLACK;
+	}
+
 	/**
 	 * 現在のターン数を返します。
 	 * @return 現在のターン数
