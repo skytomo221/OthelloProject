@@ -5,6 +5,17 @@ public class OthelloBoard {
     private int width = size;
     private OthelloCell[][] cells;
 
+    public int getSize() {
+        return size;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
 
     public OthelloBoard() {
         setup();

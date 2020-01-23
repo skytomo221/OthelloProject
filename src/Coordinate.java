@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Coordinate {
@@ -9,14 +10,14 @@ public class Coordinate {
 		this.x = x;
 		this.y = y;
 	}
-	public Supplier<Coordinate> leftUp = () -> new Coordinate(x - 1, y + 1);
-	public Supplier<Coordinate> up = () -> new Coordinate(x, y + 1);
-	public Supplier<Coordinate> rightUp = () -> new Coordinate(x + 1, y + 1);
-	public Supplier<Coordinate> left = () -> new Coordinate(x - 1, y);
-	public Supplier<Coordinate> right = () -> new Coordinate(x + 1, y);
-	public Supplier<Coordinate> downLeft = () -> new Coordinate(x - 1, y - 1);
-	public Supplier<Coordinate> down = () -> new Coordinate(x, y - 1);
-	public Supplier<Coordinate> downRight = () -> new Coordinate(x + 1, y - 1);
-	public List<Supplier<Coordinate>> arrows = Arrays.asList(
+	public Function<Coordinate, Coordinate> leftUp = (c) -> new Coordinate(c.x - 1, c.y + 1);
+	public Function<Coordinate, Coordinate> up = (c) -> new Coordinate(c.x, c.y + 1);
+	public Function<Coordinate, Coordinate> rightUp = (c) -> new Coordinate(c.x + 1, c.y + 1);
+	public Function<Coordinate, Coordinate> left = (c) -> new Coordinate(c.x - 1, c.y);
+	public Function<Coordinate, Coordinate> right = (c) -> new Coordinate(c.x + 1, c.y);
+	public Function<Coordinate, Coordinate> downLeft = (c) -> new Coordinate(c.x - 1, c.y - 1);
+	public Function<Coordinate, Coordinate> down = (c) -> new Coordinate(c.x, c.y - 1);
+	public Function<Coordinate, Coordinate> downRight = (c) -> new Coordinate(c.x + 1, c.y - 1);
+	public List<Function<Coordinate, Coordinate>> arrows = Arrays.asList(
 			leftUp, up, rightUp, left, right, downLeft, down, downRight);
 }

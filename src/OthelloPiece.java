@@ -1,23 +1,26 @@
 
 public class OthelloPiece {
-	public enum Color {
-		BLACK, WHITE,
-	}
-	private Color status;
-	public Color getColor() {
-		return status;
-	}
-	public OthelloPiece(Color status) {
-		this.status = status;
-	}
-	public void reverse() {
-		switch (status) {
-		case BLACK:
-			status = Color.WHITE;
-			break;
-		case WHITE:
-			status = Color.BLACK;
-			break;
-		}
-	}
+    public enum Color {
+        BLACK, WHITE;
+
+        public static Color reverse(Color color) {
+            return (color == OthelloPiece.Color.BLACK)
+                    ? OthelloPiece.Color.WHITE
+                    : OthelloPiece.Color.BLACK;
+        }
+    }
+
+    private Color color;
+
+    public Color getColor() {
+        return color;
+    }
+
+    public OthelloPiece(Color color) {
+        this.color = color;
+    }
+
+    public void reverse() {
+        color = Color.reverse(getColor());
+    }
 }
