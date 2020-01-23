@@ -17,6 +17,6 @@ public class Coordinate {
 	public Supplier<Coordinate> downLeft = () -> new Coordinate(x - 1, y - 1);
 	public Supplier<Coordinate> down = () -> new Coordinate(x, y - 1);
 	public Supplier<Coordinate> downRight = () -> new Coordinate(x + 1, y - 1);
-	public List<Supplier<Coordinate>> arraws = Arrays.asList(
+	public List<Supplier<Coordinate>> arrows = Arrays.asList(
 			leftUp, up, rightUp, left, right, downLeft, down, downRight);
 }
