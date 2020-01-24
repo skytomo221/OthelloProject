@@ -20,6 +20,10 @@ public class OthelloPiece {
         this.color = color;
     }
 
+    public OthelloPiece(OthelloPiece piece) {
+        this.color = piece.getColor();
+    }
+
     public void reverse() {
         color = Color.reverse(getColor());
     }

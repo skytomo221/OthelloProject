@@ -21,6 +21,16 @@ public class OthelloBoard {
         setup();
     }
 
+    public OthelloBoard(OthelloBoard board) {
+        cells = new OthelloCell[width][];
+        for (int x = 0; x < width; x++) {
+            cells[x] = new OthelloCell[height];
+            for (int y = 0; y < height; y++) {
+                cells[x][y] = new OthelloCell(board.getCell(x, y));
+            }
+        }
+    }
+
     public void setup() {
         cells = new OthelloCell[width][];
         for (int x = 0; x < width; x++) {
@@ -29,7 +39,6 @@ public class OthelloBoard {
                 cells[x][y] = new OthelloCell();
             }
         }
-        System.out.println("OK!");
     }
 
     public boolean isOutOfIndex(int n) {

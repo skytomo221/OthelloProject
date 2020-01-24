@@ -20,4 +20,12 @@ public class Coordinate {
 	public Function<Coordinate, Coordinate> downRight = (c) -> new Coordinate(c.x + 1, c.y - 1);
 	public List<Function<Coordinate, Coordinate>> arrows = Arrays.asList(
 			leftUp, up, rightUp, left, right, downLeft, down, downRight);
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Coordinate) {
+			Coordinate c = (Coordinate) obj;
+			return c.x == x && c.y == y;
+		}
+		return super.equals(obj);
+	}
 }
