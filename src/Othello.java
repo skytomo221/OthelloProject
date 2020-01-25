@@ -47,7 +47,7 @@ public class Othello {
             return false;
         }
         for (Function<Coordinate, Coordinate> arrow : coordinate.arrows) {
-            if (canPutPiece(coordinate, arrow)) {
+            if (canPutPiece(arrow.apply(coordinate), arrow)) {
                 return true;
             }
         }
@@ -58,12 +58,10 @@ public class Othello {
         Coordinate neighbor = arrow.apply(coordinate);
         if (getBoard().getCell(neighbor) == null || getBoard().getCell(neighbor).getPiece() == null) {
             return false;
-        } else if (currentColor == getBoard().getCell(neighbor).getPiece().getColor()) {
-            if (getBoard().getCell(coordinate).getPiece() == null || getBoard().getCell(coordinate).getPiece().getColor() == getCurrentColor()) {
-                return false;
-            } else {
-                return true;
-            }
+        } else if (getBoard().getCell(coordinate).getPiece() == null || getBoard().getCell(coordinate).getPiece().getColor() == getCurrentColor()){
+            return false;
+        } else if (getBoard().getCell(neighbor).getPiece().getColor() == getCurrentColor()){
+            return true;
         } else {
             return canPutPiece(neighbor, arrow);
         }
