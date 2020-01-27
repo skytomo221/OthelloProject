@@ -42,6 +42,23 @@ public class Othello {
         return currentColor;
     }
 
+    public boolean finish() {
+        return finish;
+    }
+
+    public int count(OthelloPiece.Color color) {
+        int count = 0;
+        for (int x = 0; x < getBoard().getWidth(); x++) {
+            for (int y = 0; y < getBoard().getHeight(); y++) {
+                OthelloCell cell = getBoard().getCell(x, y);
+                if (cell.getPiece() != null && cell.getPiece().getColor() == color) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
     public boolean canPutPiece(Coordinate coordinate) {
         if (getBoard().getCell(coordinate) == null || getBoard().getCell(coordinate).getPiece() != null) {
             return false;
@@ -58,9 +75,9 @@ public class Othello {
         Coordinate neighbor = arrow.apply(coordinate);
         if (getBoard().getCell(neighbor) == null || getBoard().getCell(neighbor).getPiece() == null) {
             return false;
-        } else if (getBoard().getCell(coordinate).getPiece() == null || getBoard().getCell(coordinate).getPiece().getColor() == getCurrentColor()){
+        } else if (getBoard().getCell(coordinate).getPiece() == null || getBoard().getCell(coordinate).getPiece().getColor() == getCurrentColor()) {
             return false;
-        } else if (getBoard().getCell(neighbor).getPiece().getColor() == getCurrentColor()){
+        } else if (getBoard().getCell(neighbor).getPiece().getColor() == getCurrentColor()) {
             return true;
         } else {
             return canPutPiece(neighbor, arrow);
@@ -87,11 +104,11 @@ public class Othello {
                 reversePiece(coordinate, arrow);
             }
             currentColor = OthelloPiece.Color.reverse(currentColor);
+            pass();
+            updateFinish();
+            history.add(new OthelloBoard(getBoard()));
+            turn++;
         }
-        //pass();
-        //updateFinish();
-        history.add(new OthelloBoard(getBoard()));
-        turn++;
     }
 
     protected void reversePiece(Coordinate coordinate, Function<Coordinate, Coordinate> arrow) {
@@ -101,10 +118,6 @@ public class Othello {
             getBoard().getCell(arrow.apply(coordinate)).getPiece().reverse();
             reversePiece(arrow.apply(coordinate), arrow);
         }
-    }
-
-    public boolean finish() {
-        return finish;
     }
 
     protected void pass() {
@@ -121,16 +134,20 @@ public class Othello {
     protected void updateFinish() {
         for (int x = 0; x < getBoard().getWidth(); x++) {
             for (int y = 0; y < getBoard().getWidth(); y++) {
-                for (int i = 0; i < 2; i++) {
-                    if (canPutPiece(new Coordinate(x, y))) {
-                        finish = true;
-                        return;
-                    }
-                    currentColor = OthelloPiece.Color.reverse(currentColor);
+                if (canPutPiece(new Coordinate(x, y))) {
+                    finish = false;
+                    return;
                 }
+                currentColor = OthelloPiece.Color.reverse(currentColor);
+                if (canPutPiece(new Coordinate(x, y))) {
+                    finish = false;
+                    currentColor = OthelloPiece.Color.reverse(currentColor);
+                    return;
+                }
+                currentColor = OthelloPiece.Color.reverse(currentColor);
             }
         }
-        finish = false;
+        finish = true;
     }
 
     /**

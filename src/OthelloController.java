@@ -55,9 +55,25 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
             Coordinate c = p.getCoordinate(e.getPoint());
             othello.putPiece(c);
             p.repaint();
-            viewer.northLabel.setText(
-            		(othello.currentColor == OthelloPiece.Color.BLACK ? "黒" : "白") + "の番です．" +
-					"現在，" + othello.turn + "ターン目です．");
+            if (othello.finish()) {
+                int black = othello.count(OthelloPiece.Color.BLACK);
+                int white = othello.count(OthelloPiece.Color.WHITE);
+                String message = othello.turn + "ターン目で，終了しました．" + black + "対" + white + "で";
+                if (black > white) {
+                    message += "黒の勝ちです！";
+                } else if (black < white) {
+                    message += "白の勝ちです！";
+                } else {
+                    message += "引き分けです！";
+                }
+                viewer.northLabel.setText(message);
+            } else {
+                int black = othello.count(OthelloPiece.Color.BLACK);
+                int white = othello.count(OthelloPiece.Color.WHITE);
+                String message = (othello.currentColor == OthelloPiece.Color.BLACK ? "黒" : "白") + "の番です．";
+                message += "現在，" + othello.turn + "ターン目です．" + black + "対" + white + "です．";
+                viewer.northLabel.setText(message);
+            }
         }
     }
 
