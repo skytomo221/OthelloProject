@@ -2,12 +2,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.regex.Pattern;
 
-public class OthelloController implements ActionListener, ComponentListener, MouseListener, MouseMotionListener {
+public class OthelloController implements ActionListener, ComponentListener, KeyListener, MouseListener, MouseMotionListener {
 	protected OthelloViewer viewer;
 
 	protected Othello othello;
@@ -23,6 +25,7 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
 		viewer.boardDrawer.addMouseListener(this);
 		viewer.boardDrawer.addMouseMotionListener(this);
 		viewer.sendButton.addMouseListener(this);
+        viewer.textField.addKeyListener(this);
 	}
 
 	public void parseInput() {
@@ -41,6 +44,29 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
 			}
 		}
 	}
+
+	public void repaint() {
+        viewer.repaint();
+        if (othello.finish()) {
+            int black = othello.count(OthelloPiece.Color.BLACK);
+            int white = othello.count(OthelloPiece.Color.WHITE);
+            String message = othello.turn + "ターン目で，終了しました．" + black + "対" + white + "で";
+            if (black > white) {
+                message += "黒の勝ちです！";
+            } else if (black < white) {
+                message += "白の勝ちです！";
+            } else {
+                message += "引き分けです！";
+            }
+            viewer.northLabel.setText(message);
+        } else {
+            int black = othello.count(OthelloPiece.Color.BLACK);
+            int white = othello.count(OthelloPiece.Color.WHITE);
+            String message = (othello.currentColor == OthelloPiece.Color.BLACK ? "黒" : "白") + "の番です．";
+            message += "現在，" + othello.turn + "ターン目です．" + black + "対" + white + "です．";
+            viewer.northLabel.setText(message);
+        }
+    }
 
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
@@ -76,26 +102,7 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
 		} else if (e.getSource() == viewer.sendButton) {
 			parseInput();
 		}
-		viewer.repaint();
-		if (othello.finish()) {
-			int black = othello.count(OthelloPiece.Color.BLACK);
-			int white = othello.count(OthelloPiece.Color.WHITE);
-			String message = othello.turn + "ターン目で，終了しました．" + black + "対" + white + "で";
-			if (black > white) {
-				message += "黒の勝ちです！";
-			} else if (black < white) {
-				message += "白の勝ちです！";
-			} else {
-				message += "引き分けです！";
-			}
-			viewer.northLabel.setText(message);
-		} else {
-			int black = othello.count(OthelloPiece.Color.BLACK);
-			int white = othello.count(OthelloPiece.Color.WHITE);
-			String message = (othello.currentColor == OthelloPiece.Color.BLACK ? "黒" : "白") + "の番です．";
-			message += "現在，" + othello.turn + "ターン目です．" + black + "対" + white + "です．";
-			viewer.northLabel.setText(message);
-		}
+        repaint();
 	}
 
 	@Override
@@ -134,4 +141,24 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
 			p.repaint();
 		}
 	}
+
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        switch (keyEvent.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
+                parseInput();
+                repaint();
+                break;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
+    }
 }
