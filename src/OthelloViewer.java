@@ -24,7 +24,7 @@ public class OthelloViewer extends JFrame {
         panel.setLayout(new BorderLayout(0, 0));
         setContentPane(panel);
         JPanel southPanel = new JPanel();
-        JLabel southLabel = new JLabel("コマンドを入力して戦闘開始．23を入力すると(x = 2, y = 3)のところにコマを置く．");
+        JLabel southLabel = new JLabel("コマンドを入力して戦闘開始．置きたい番号のところにコマを置く．resetでリセット，undoでもとに戻す．");
         northLabel = new JLabel((othello.currentColor == OthelloPiece.Color.BLACK ? "黒" : "白") + "の番です．");
         northLabel.setFont( new Font("SanSerif" , Font.BOLD , 20));
         textField = new JTextField();

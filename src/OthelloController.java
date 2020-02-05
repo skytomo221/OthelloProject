@@ -30,6 +30,9 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
 		if (text.equals("reset")) {
 		    othello.initialization();
         }
+        else if (text.equals("undo")) {
+            othello.undo();
+        }
 		else if (Pattern.matches("\\d+", text)) {
 			int number = Integer.parseInt(text);
 			int index = number - 1;

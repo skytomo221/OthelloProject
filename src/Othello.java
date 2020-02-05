@@ -41,6 +41,12 @@ public class Othello {
         getBoard().getCell(4, 3).putPiece(new OthelloPiece(OthelloPiece.Color.BLACK));
     }
 
+    public void undo() {
+        if (turn > 1) {
+            turn--;
+        }
+    }
+
     /**
      * 現在のターンの石の色を返します。
      *
