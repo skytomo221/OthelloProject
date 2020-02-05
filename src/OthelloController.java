@@ -27,7 +27,10 @@ public class OthelloController implements ActionListener, ComponentListener, Mou
 
 	public void parseInput() {
 		String text = viewer.textField.getText();
-		if (Pattern.matches("\\d+", text)) {
+		if (text.equals("reset")) {
+		    othello.initialization();
+        }
+		else if (Pattern.matches("\\d+", text)) {
 			int number = Integer.parseInt(text);
 			int index = number - 1;
 			if (index < othello.getCanPutPieceList().size()) {

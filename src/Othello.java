@@ -6,25 +6,33 @@ public class Othello {
     /**
      * 現在のターンの石の色を表します。
      */
-    OthelloPiece.Color currentColor = OthelloPiece.Color.BLACK;
+    OthelloPiece.Color currentColor;
     /**
      * 現在のターン数を表します。
      */
-    int turn = 1;
+    int turn;
     /**
      * 対戦の履歴を表します。
      */
-    List<OthelloBoard> history = new ArrayList<OthelloBoard>();
+    List<OthelloBoard> history;
     /**
      * ゲームが終了したかを表します。
      */
-    boolean finish = false;
+    boolean finish;
 
     public OthelloBoard getBoard() {
         return history.get(getTurn());
     }
 
     public Othello() {
+        initialization();
+    }
+
+    public void initialization() {
+        currentColor = OthelloPiece.Color.BLACK;
+        turn = 1;
+        finish = false;
+        history = new ArrayList<OthelloBoard>();
         history.add(new OthelloBoard());
         history.add(new OthelloBoard(history.get(0)));
         getBoard().getCell(3, 3).putPiece(new OthelloPiece(OthelloPiece.Color.WHITE));
